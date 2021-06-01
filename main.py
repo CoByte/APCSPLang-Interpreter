@@ -1010,18 +1010,27 @@ class Robot:
 
     def can_move(self, direction):
         headings = {
-            "right": (1,0),
-            "up": (0,1),
-            "left": (-1,0),
-            "down": (0,-1)
+            "forward": 0,
+            "left": 90,
+            "backward": 180,
+            "right": 270
+        }
+
+        mappings = {
+            0: (1,0),
+            90: (0,1),
+            180: (-1,0),
+            270: (0,-1)
         }
 
         if direction not in headings:
             raise Exception("Invalid direction")
 
+        current_heading = mappings[int(self.turtle.heading()) + headings[direction]]
+
         tx, ty = self.pos()
-        tx = (tx-25)//50 + headings[direction][0]
-        ty = (ty-25)//50 + headings[direction][1]
+        tx = (tx-25)//50 + current_heading[0]
+        ty = (ty-25)//50 + current_heading[1]
         test_pos = (tx, ty)
 
         if test_pos[0] < 0 or self.width // 50 <= test_pos[0] or test_pos[1] < 0 or self.height // 50 <= test_pos[1]:
@@ -1161,9 +1170,12 @@ PRELUDE = {
         MOVE_FORWARD,
         ROTATE_LEFT,
         ROTATE_RIGHT,
-        CAN_MOVE
+        CAN_MOVE,
+        MemEntry("forward", MemType.STRING),
+        MemEntry("backward", MemType.STRING),
+        MemEntry("left", MemType.STRING),
+        MemEntry("right", MemType.STRING)
 ]}
-
 
 class NodeVisiter:
     def visit(self, node: Node):
