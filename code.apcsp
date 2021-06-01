@@ -1,0 +1,77 @@
+
+PROCEDURE in_list(list, test_item) {
+    FOR EACH item IN list {
+        IF(item = test_item) {
+            RETURN(TRUE)
+        }
+    }
+
+    RETURN(FALSE)
+}
+
+PROCEDURE get_answers(questions) {
+    answers <= []
+    FOR EACH item IN questions {
+        APPEND(answers, "")
+    }
+
+    used_indexes <= []
+    REPEAT UNTIL(FALSE) {
+        index <= RANDOM(1, LENGTH(questions))
+        IF(NOT in_list(used_indexes, index)) {
+            DISPLAY("\n")
+            APPEND(used_indexes, index)
+            DISPLAY(questions[index])
+            REMOVE(answers, index)
+            INSERT(answers, index, INPUT())
+        }
+        IF(LENGTH(used_indexes) = LENGTH(questions)) {
+            RETURN(answers)
+        }
+    }
+}
+
+questions <= [
+    "adjective",
+    "adjective",
+    "type of bird",
+    "room in a house",
+    "past tense verb",
+    "verb",
+    "relative's name",
+    "noun",
+    "a liquid",
+    "verb ending in -ing",
+    "part of the body (plural)",
+    "plural noun",
+    "verb ending in -ing",
+    "noun"
+]
+
+contents <= [
+    "It was a",
+    ", cold November day. I woke up to the",
+    "smell of",
+    "roasting in the",
+    "downstairs. I",
+    "down the stairs to see if I could help",
+    "the dinner. My mom said, 'See if",
+    "needs a fresh",
+    ".' So I carried a tray of glasses full of",
+    "into the",
+    "room. When I got there, I couldn't believe my",
+    "! There were",
+    "",
+    "on the",
+    "!"
+]
+
+answers <= get_answers(questions)
+
+count <= 1
+REPEAT LENGTH(answers) TIMES {
+    DISPLAY(contents[count])
+    DISPLAY(answers[count])
+    count <= count + 1
+}
+DISPLAY(contents[LENGTH(contents)])
