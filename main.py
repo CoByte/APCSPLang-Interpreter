@@ -87,7 +87,10 @@ SYMBOL_MAPPING = {
     "<": TokenType.LESS,
     "=": TokenType.EQUAL,
     "[": TokenType.LBRACKET,
-    "]": TokenType.RBRACKET
+    "]": TokenType.RBRACKET,
+    "≠": TokenType.LEQUAL,
+    "≥": TokenType.GEQUAL,
+    "≤": TokenType.NEQUAL
 }
 
 RESERVED_KEYWORDS = {
@@ -206,6 +209,18 @@ class Lexer(object):
             if self.current_char == "<" and self.next_char == "=":
                 self.pos += 2
                 return Token(TokenType.ASSIGN)
+
+            if self.current_char == "=" and self.next_char == "<":
+                self.pos += 2
+                return Token(TokenType.LEQUAL)
+
+            if self.current_char == "=" and self.next_char == ">":
+                self.pos += 2
+                return Token(TokenType.GEQUAL)
+
+            if self.current_char == "\\" and self.next_char == "=":
+                self.pos += 2
+                return Token(TokenType.NEQUAL)
 
             if self.current_char in SYMBOL_MAPPING:
                 symbol = self.current_char
@@ -584,7 +599,8 @@ class Parser:
         TokenType.LESS,
         TokenType.GEQUAL,
         TokenType.LEQUAL,
-        TokenType.EQUAL
+        TokenType.EQUAL,
+        TokenType.NEQUAL
     )
     def term_compare(self):
         pass
@@ -843,7 +859,8 @@ BINARY_OPERATORS = {
         lambda a, b: MemEntry(a.value or b.value, MemType.BOOLEAN),
         MemType.BOOLEAN
     ),
-    TokenType.EQUAL: equal_binop
+    TokenType.EQUAL: equal_binop,
+    TokenType.NEQUAL: lambda a, b: MemEntry(not equal_binop(a, b).value, MemType.BOOLEAN)
 }
 
 
