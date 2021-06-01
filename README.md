@@ -24,7 +24,7 @@ In theory, this interpreter should conform to the APCSP language specification a
   
 * **TRUE** and **FALSE** keywords have been added
 * Procedures that do not have a return statement will return the **NONE** type
-* Procedures are stored in memory as variables, and thus can be passed into functions. Note that procedures do not capture local scope like they might in a better language, so I don't think decorator patterns and similar things are possible.
+* Procedures are stored in memory as variables, and thus can be passed into functions. Note that procedures do not capture outer scope like they might in a better language, so I don't think decorator patterns and similar things are possible.
 * Strings can be written with quotations like in most languages, e.g *"I'm a string!"*
   * Note that no operators apply to strings except for equals/nequals, so concatenation is not possible.
 
