@@ -17,8 +17,8 @@ In theory, this interpreter should conform to the APCSP language specification a
   To make things more typable, these more typable symbols have been added as equivalent:
   
   * /=
-  * \>=
-  * <=
+  * =\>
+  * =<
 
   Note that the weird symbols do still work, so they won't need to be changed if copy-pasting.
   
